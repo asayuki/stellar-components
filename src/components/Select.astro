@@ -1,0 +1,11 @@
+---
+const { options = [], selectedValue = '', onChange } = Astro.props;
+---
+
+<select value={selectedValue} onchange={onChange}>
+    {options.map(option => (
+        <option value={option.value} selected={option.value === selectedValue}>
+            {option.label}
+        </option>
+    ))}
+</select>

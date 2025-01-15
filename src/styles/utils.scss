@@ -1,0 +1,118 @@
+@for $i from 1 through 20 {
+    $width: $i * 5;
+    .w-#{$width} {
+      width: #{$width}#{'%'};
+    }
+}
+  
+  // Fixed width utilities for specific cases
+  $fixed-widths: (
+    240: 240px,
+    320: 320px,
+    480: 480px,
+    640: 640px,
+    960: 960px
+  );
+  
+  @each $name, $width in $fixed-widths {
+    .w-#{$name} {
+      width: $width;
+    }
+    
+    .mw-#{$name} {
+      max-width: $width;
+    }
+  }
+  
+  // Padding utilities (px)
+  $padding-sizes: (
+    4: 4px,
+    8: 8px,
+    12: 12px,
+    16: 16px,
+    20: 20px,
+    24: 24px,
+    32: 32px
+  );
+  
+  @each $name, $size in $padding-sizes {
+    .p-#{$name} {
+      padding: $size;
+    }
+    
+    .px-#{$name} {
+      padding-left: $size;
+      padding-right: $size;
+    }
+    
+    .py-#{$name} {
+      padding-top: $size;
+      padding-bottom: $size;
+    }
+    
+    .pt-#{$name} {
+      padding-top: $size;
+    }
+    
+    .pb-#{$name} {
+      padding-bottom: $size;
+    }
+    
+    .pl-#{$name} {
+      padding-left: $size;
+    }
+    
+    .pr-#{$name} {
+      padding-right: $size;
+    }
+  }
+  
+  // Margin utilities (px)
+  $margin-sizes: (
+    4: 4px,
+    8: 8px,
+    10: 10px,
+    12: 12px,
+    16: 16px,
+    20: 20px,
+    24: 24px,
+    32: 32px
+  );
+  
+  @each $name, $size in $margin-sizes {
+    .m-#{$name} {
+      margin: $size;
+    }
+    
+    .mx-#{$name} {
+      margin-left: $size;
+      margin-right: $size;
+    }
+    
+    .my-#{$name} {
+      margin-top: $size;
+      margin-bottom: $size;
+    }
+    
+    .mt-#{$name} {
+      margin-top: $size;
+    }
+    
+    .mb-#{$name} {
+      margin-bottom: $size;
+    }
+    
+    .ml-#{$name} {
+      margin-left: $size;
+    }
+    
+    .mr-#{$name} {
+      margin-right: $size;
+    }
+}
+  
+// Layout helper for flex fill
+.flex-fill {
+    flex: 1;
+    min-width: 0;
+}

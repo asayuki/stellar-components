@@ -1,0 +1,39 @@
+@use 'utils.scss';
+
+@import "@picocss/pico/css/pico.min.css";
+@import "@picocss/pico/css/pico.colors.css";
+
+.full-height {
+    min-height: 100dvh;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-middle {
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-horizontal {
+    flex-direction: row;
+}
+
+.flex-vertical {
+    flex-direction: column;
+}
+
+:root {
+    --primary: #1095c1;
+    --primary-hover: #086788;
+    --primary-focus: rgba(16, 149, 193, 0.125);
+    --primary-inverse: #fff;
+}
+
+[data-theme="light"] {
+
+}
+  
+[data-theme="dark"] {
+}

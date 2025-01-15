@@ -1,0 +1,59 @@
+---
+interface Props {
+  collapsed?: boolean;
+  class?: string;
+}
+
+const { 
+  collapsed = false,
+  class: className = ''
+} = Astro.props;
+---
+
+<aside class:list={['sidebar ', collapsed ? 'w-16' : 'w-64', 'transition-all duration-300', className ]} >
+  <slot />
+</aside>
+<aside-toggle>Open sidebar</aside-toggle>
+
+<script>
+document.querySelector('aside-toggle').addEventListener('click', () => {
+  const aside = document.querySelector('aside');
+  const shown = aside.getAttribute('data-show') === 'true';
+  aside.setAttribute('data-show', shown ? 'false' : 'true');
+});
+</script>
+
+<style>
+.sidebar {
+    background-color: var(--pico-color-slate-50);
+    grid-area: sidebar;
+    overflow-y: auto;
+}
+
+aside-toggle {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  aside {
+      position: absolute;
+      transform: translateX(-100%);
+      transition: all .5s;
+      height: 100%;
+      width: 100%;
+      max-width: 60dvw;
+      max-height: 100dvh;
+
+      &[data-show="true"] {
+        transform: translateX(0%);
+      }
+  }
+
+  aside-toggle {
+      display: block;
+      position: absolute;
+      right: 0;
+      top: 0;
+  }
+}
+</style>

@@ -1,0 +1,55 @@
+{
+  "name": "stellarcomponents",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm run build:css && npm run build:js",
+    "build:csss": "postcss src/styles/index.scss -o dist/index.css",
+    "build:css": "sass src/styles/index.scss | postcss -o dist/index.css",
+    "build:js": "tsc"
+  },
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "default": "./src/index.ts"
+    },
+    "./*": "./src/*",
+    "./styles": "./dist/index.css",
+    "./components/*": "./dist/components/*"
+  },
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": ["./dist/*"]
+    }
+  },
+  "files": [
+    "src"
+  ],
+  "author": "neme <neme@whispered.se>",
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "astro",
+    "components",
+    "ui"
+  ],
+  "type": "module",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "astro": "^5.1.1",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "postcss-cli": "^11.0.0",
+    "postcss-import": "^16.1.0",
+    "postcss-nested": "^7.0.2",
+    "postcss-scss": "^4.0.9",
+    "sass": "^1.83.0",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "@picocss/pico": "^2.0.6"
+  }
+}

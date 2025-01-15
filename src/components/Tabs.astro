@@ -1,0 +1,72 @@
+---
+// Tabs.astro
+const { buttons, groupId } = Astro.props;
+console.log(buttons);
+buttons.map((button, index) => console.log(index, button));
+---
+
+<div class="tabs" data-tabs={groupId}>
+  {buttons.map((button, index) => (
+    <button 
+      class="tab-button" 
+      data-tab-button={index}
+      data-active={index === 0 ? 'true' : 'false'}
+    >
+      {button}
+    </button>
+  ))}
+</div>
+
+<script>
+  function setupTabs() {
+    // Get all tab groups on the page
+    const tabGroups = document.querySelectorAll('[data-tabs]');
+    
+    tabGroups.forEach(tabsContainer => {
+      const groupId = (tabsContainer as HTMLElement).dataset.tabs;
+      const buttons = tabsContainer.querySelectorAll('[data-tab-button]');
+      
+      buttons.forEach(button => {
+        button.addEventListener('click', () => {
+          // Remove active state from all buttons in THIS group
+          buttons.forEach(btn => {
+            (btn as HTMLElement).dataset.active = 'false';
+            btn.classList.remove('active');
+          });
+          
+          // Set active state for clicked button
+          (button as HTMLElement).dataset.active = 'true';
+          button.classList.add('active');
+          
+          // Dispatch custom event with the group ID
+          const tabIndex = parseInt((button as HTMLElement).dataset.tabButton);
+          document.dispatchEvent(new CustomEvent('tabChange', { 
+            detail: { 
+              groupId,
+              tabIndex, 
+              tabName: buttons[tabIndex].textContent.trim() 
+            }
+          }));
+        });
+      });
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', setupTabs);
+</script>
+
+<style>
+    .tabs {
+        display: flex;
+        gap: 5px;
+    }
+    .button {
+        padding: 10px 20px;
+        margin: 5px;
+        cursor: pointer;
+    }
+    .active {
+        background-color: #007BFF;
+        color: white;
+    }
+</style>

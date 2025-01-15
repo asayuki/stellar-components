@@ -1,0 +1,21 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<header class:list={[
+  'dashboard-header p-16 bg-white border-b border-gray-200 p-4',
+  className
+]}>
+  <slot />
+</header>
+
+<style>
+  .dashboard-header {
+    border-bottom: 1px solid var(--pico-color-slate-50);
+    grid-area: header;
+  }
+</style>
