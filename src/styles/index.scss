@@ -24,6 +24,10 @@
     flex-direction: column;
 }
 
+table:last-child {
+    margin-bottom: 0;
+}
+
 :root {
     --primary: #1095c1;
     --primary-hover: #086788;
