@@ -1,53 +1,55 @@
 ---
-// Tabs.astro
-const { buttons, groupId } = Astro.props;
-console.log(buttons);
-buttons.map((button, index) => console.log(index, button));
+const { buttons, id } = Astro.props;
 ---
 
-<div class="tabs" data-tabs={groupId}>
-  {buttons.map((button, index) => (
-    <button 
-      class="tab-button" 
-      data-tab-button={index}
-      data-active={index === 0 ? 'true' : 'false'}
-    >
-      {button}
-    </button>
-  ))}
+<div class="tabs" data-tabs-id={id}>
+  <div class="tab-buttons">
+    {buttons.map((button, index) => (
+      <button 
+        class={(button.active ? 'active' : '') + ` tab-button`} 
+        data-id={button.id}
+        data-active={button.active ? 'true' : 'false'}
+      >
+        {button.label}
+      </button>
+    ))}
+  </div>
+
+  <slot />
 </div>
 
 <script>
-  function setupTabs() {
-    // Get all tab groups on the page
-    const tabGroups = document.querySelectorAll('[data-tabs]');
-    
-    tabGroups.forEach(tabsContainer => {
-      const groupId = (tabsContainer as HTMLElement).dataset.tabs;
-      const buttons = tabsContainer.querySelectorAll('[data-tab-button]');
-      
-      buttons.forEach(button => {
+  const switchTab = (id: string, container: HTMLElement) => {
+    const tabs = container.querySelectorAll('.tab');
+    tabs.forEach((panel: HTMLElement) => panel.style.display = 'none');
+    const activePanel: HTMLElement = container.querySelector(`.tab[data-id="${id}"]`);
+    if (activePanel) {
+      activePanel.style.display = 'block';
+    }
+  }
+
+  const setupTabs = () => {
+    const tabGroups = document.querySelectorAll('[data-tabs-id]');
+    tabGroups.forEach((tabsContainer: HTMLElement) => {
+      const id = tabsContainer.getAttribute('data-tabs-id');
+      const buttons = tabsContainer.querySelectorAll('.tab-buttons button');
+
+      buttons.forEach((button: HTMLElement) => {
         button.addEventListener('click', () => {
-          // Remove active state from all buttons in THIS group
-          buttons.forEach(btn => {
-            (btn as HTMLElement).dataset.active = 'false';
+          buttons.forEach((btn: HTMLElement) => {
+            btn.setAttribute('data-active', 'false')
             btn.classList.remove('active');
           });
-          
-          // Set active state for clicked button
-          (button as HTMLElement).dataset.active = 'true';
+
+          button.setAttribute('data-active', 'true');
           button.classList.add('active');
-          
-          // Dispatch custom event with the group ID
-          const tabIndex = parseInt((button as HTMLElement).dataset.tabButton);
-          document.dispatchEvent(new CustomEvent('tabChange', { 
-            detail: { 
-              groupId,
-              tabIndex, 
-              tabName: buttons[tabIndex].textContent.trim() 
-            }
-          }));
+
+          switchTab(button.getAttribute('data-id'), tabsContainer);
         });
+
+        if (button.getAttribute('data-active') === 'true') {
+          switchTab(button.getAttribute('data-id'), tabsContainer);
+        }
       });
     });
   }
@@ -55,8 +57,8 @@ buttons.map((button, index) => console.log(index, button));
   document.addEventListener('DOMContentLoaded', setupTabs);
 </script>
 
-<style>
-    .tabs {
+<style is:global>
+    .tab-buttons {
         display: flex;
         gap: 5px;
     }
@@ -69,4 +71,14 @@ buttons.map((button, index) => console.log(index, button));
         background-color: #007BFF;
         color: white;
     }
+
+    .tabs .tab {
+      animation: fadeIn 0.3s ease-in-out;
+      display: none;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+  }
 </style>

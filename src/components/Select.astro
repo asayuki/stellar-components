@@ -1,11 +1,27 @@
 ---
-const { options = [], selectedValue = '', onChange } = Astro.props;
+interface Props {
+    options: Array<{ value: string, label: string }>;
+    selectedValue: string;
+    onChange?: (value: string) => void;
+    id: string;
+    class?: string;
+}
+
+const { options = [], selectedValue = '', onChange, id = '', class: className = '' } = Astro.props;
 ---
 
-<select value={selectedValue} onchange={onChange}>
+<select class={className} value={selectedValue} onChange={onChange} id={id}>
     {options.map(option => (
         <option value={option.value} selected={option.value === selectedValue}>
             {option.label}
         </option>
     ))}
 </select>
+
+<script>
+    function setupSelect() {
+        console.log('Setup select');
+    }
+
+    document.addEventListener('DOMContentLoaded', setupSelect);
+</script>

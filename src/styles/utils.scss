@@ -7,6 +7,7 @@
   
   // Fixed width utilities for specific cases
   $fixed-widths: (
+    auto: auto,
     240: 240px,
     320: 320px,
     480: 480px,
@@ -83,6 +84,10 @@
     .m-#{$name} {
       margin: $size;
     }
+
+    .g-#{$name} {
+      gap: $size;
+    }
     
     .mx-#{$name} {
       margin-left: $size;
@@ -116,3 +121,16 @@
     flex: 1;
     min-width: 0;
 }
+
+.d-f {
+  display: flex;
+
+  &.jc-fs {
+    justify-content: flex-start;
+  }
+
+  &.ai-fs {
+    align-items: flex-start;
+  }
+}
+

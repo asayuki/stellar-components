@@ -3,6 +3,7 @@ export { default as Select } from './components/Select.astro';
 export { default as Heading } from './components/Heading.astro';
 export { default as Menu } from './components/Menu.astro';
 export { default as Tabs } from './components/Tabs.astro';
+export { default as Tab } from './components/Tab.astro';
 export { default as Breadcrumbs } from './components/Breadcrumbs.astro';
 
 export { default as DashboardLayout } from './structure/DashboardLayout.astro';
